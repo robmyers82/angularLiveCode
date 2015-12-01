@@ -1,0 +1,68 @@
+<div class="modal fade" id="posModal" ng-controller="TaskController">
+  <div class="modal-dialog">
+    <div class="modal-content">      
+
+      <div class="panel panel-warning title">
+
+        <div class="panel-heading title">            
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>        
+            <h3 class="panel-title">Post a Task (FREE)</h3>
+        </div>
+
+        <div class="panel-body">
+          <form name="checkoutForm" stripe-form="stripeCallback" ng-submit="onSubmit()" data-abide>
+
+            <fieldset>
+              <legend>Payment Information</legend>
+
+              <div class="row">
+                <div class="col-sm-6" ng-class="{error: checkoutForm.number.$invalid}">
+                  <label>Card Information
+                    <input ng-model="number" name="number" payments-format="card" payments-validate="card"
+                           placeholder="Card Number" type="text"/>
+                  </label>
+                </div>
+                <div class="col-sm-3 columns" ng-class="{error: checkoutForm.expiry.$invalid}">
+                  <label>Expiry
+                    <input ng-model="expiry" name="expiry" payments-format="expiry" payments-validate="expiry"
+                           placeholder="Expiry" type="text"/>
+                  </label>
+                </div>
+                <div class="col-sm-3 columns" ng-class="{error: checkoutForm.cvc.$invalid}">
+                  <label>CVC
+                    <input ng-model="cvc" name="cvc" payments-format="cvc" payments-validate="cvc"
+                           placeholder="CVC" type="text"/>
+                  </label>
+                </div>
+
+                <div class="col-sm-12 columns">
+                  <strong>
+                    Amount to pay: {{totalAmount}}$
+                  </strong>
+                </div>
+              </div>
+            </fieldset>
+
+            <alert ng-if="stripeError" type="'alert'" close="hideAlerts()">
+              Stripe returned an error: {{stripeError}}
+            </alert>
+
+            <alert ng-if="stripeToken" close="hideAlerts()">
+              Stripe successfully acquired! Token: {{stripeToken}}
+            </alert>
+
+            <div class="clearfix">
+              <div class="right">
+                <button class="cancel" ng-click="$dismiss();">Cancel</button>
+                <button type="submit" ng-disabled="checkoutForm.$invalid">Place Order</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
