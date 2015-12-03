@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('BrowseController', function($scope, $routeParams, toaster, Task, Auth, Comment, Offer) {
+app.controller('BrowseController', function($scope, $routeParams, toaster, Task, Auth, Comment, Offer, NgMap) {
 
 	$scope.map = '';
 	$scope.searchTask = '';		
@@ -14,12 +14,18 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 
 	$scope.listMode = true;
 
-	var mapOptions = {
-      center: new google.maps.LatLng(46.128155, -60.179025),
-      zoom: 14,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	NgMap.getMap().then(function(map) {
+		console.log(map.getCenter());
+		console.log('markers', map.markers);
+		console.log('shapes', map.shapes);
+	});
+
+	// var mapOptions = {
+ //      center: new google.maps.LatLng(46.128155, -60.179025),
+ //      zoom: 14,
+ //      mapTypeId: google.maps.MapTypeId.ROADMAP
+ //    }
+ //    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 
 	if($routeParams.taskId) {
@@ -63,7 +69,7 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 			$scope.isCompleted = Task.isCompleted;
 		}
 
-		initialize(task.lat, task.lng);
+		// initialize(task.lat, task.lng);
 		
 		// Get list of comments for the selected task
 		$scope.comments = Comment.comments(task.$id);
@@ -153,7 +159,7 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 	};
 
 
-	function initialize(lat, lng) {
-	    $scope.map.setCenter(new google.maps.LatLng(lat, lng));
-	}
+	// function initialize(lat, lng) {
+	//     $scope.map.setCenter(new google.maps.LatLng(lat, lng));
+	// }
 });

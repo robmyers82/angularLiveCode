@@ -11,6 +11,7 @@ var app = angular
     'angularMoment',
     'ui.calendar',
     'angularPayments',
+    'ngMap',
   ])
   .constant('FURL', 'https://uitrob.firebaseio.com/')
   .run(function($rootScope, $location) {
