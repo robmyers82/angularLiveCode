@@ -2,6 +2,7 @@
 
 app.controller('BrowseController', function($scope, $routeParams, toaster, Task, Auth, Comment, Offer) {
 
+	$scope.map = '';
 	$scope.searchTask = '';		
 	$scope.tasks = Task.all;
 
@@ -12,12 +13,21 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 	$scope.signedIn = Auth.signedIn;
 
 	$scope.listMode = true;
-	
+
+	var mapOptions = {
+      center: new google.maps.LatLng(46.128155, -60.179025),
+      zoom: 14,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+
 	if($routeParams.taskId) {
-		var task = Task.getTask($routeParams.taskId).$asObject();
-		$scope.listMode = false;
-		setSelectedTask(task);	
-	}	
+		Task.getTask($routeParams.taskId).$asObject().$loaded().then(function(task) {
+			$scope.listMode = false;
+			setSelectedTask(task);	
+		});
+	}
 		
 	function setSelectedTask(task) {
 		$scope.selectedTask = task;
@@ -51,8 +61,9 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 
 			// Check if the selectedTask is completed
 			$scope.isCompleted = Task.isCompleted;
-
 		}
+
+		initialize(task.lat, task.lng);
 		
 		// Get list of comments for the selected task
 		$scope.comments = Comment.comments(task.$id);
@@ -142,5 +153,7 @@ app.controller('BrowseController', function($scope, $routeParams, toaster, Task,
 	};
 
 
-	
+	function initialize(lat, lng) {
+	    $scope.map.setCenter(new google.maps.LatLng(lat, lng));
+	}
 });

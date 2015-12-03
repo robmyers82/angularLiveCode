@@ -41,7 +41,8 @@
 	<div class="col-md-6">
 		<div ng-show="listMode">
 			<!-- <img src="images/browse.jpg" class="img-responsive img-browse"> -->
-			<div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+			<!-- <div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div> -->
+			<div id="map"></div>
 		</div>
 		
 		<div ng-show="!listMode">
@@ -97,6 +98,20 @@
 					    </div>
 					    <div class="panel-body">
 					        {{ selectedTask.description }}
+					    </div>
+					</div>			
+				</div>	
+			</div>
+
+			<!-- MAP -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+					    <div class="panel-heading">
+					        <h3 class="panel-title">Map Yo!</h3>
+					    </div>
+					    <div class="panel-body">
+					        
 					    </div>
 					</div>			
 				</div>	
